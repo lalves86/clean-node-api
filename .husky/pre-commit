@@ -1,6 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-eslint 'src/**' --fix
-npm run test:staged
-git add
+npm run test
