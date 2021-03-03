@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run test
+npx eslint 'src/**' --fix
+npm run test:staged
+git add .
