@@ -13,7 +13,7 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
-    "prepare": "npx husky install"
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -34,7 +34,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "git-commit-msg-linter": "^3.0.0",
-    "husky": "^4.3.8",
+    "husky": "^5.1.3",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.4",
     "rimraf": "^3.0.2",
