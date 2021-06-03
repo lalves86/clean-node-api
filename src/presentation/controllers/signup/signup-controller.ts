@@ -20,11 +20,9 @@ export class SignUpController implements Controller {
         email,
         password
       })
-      console.log(account)
       await this.authentication?.auth({ email, password })
       return ok(account)
     } catch (error) {
-      console.log(error)
       return serverError(error)
     }
   }
