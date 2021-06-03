@@ -4,7 +4,8 @@
     "module": "commonjs",
     "target": "es2019",
     "esModuleInterop": true,
-    "noImplicitUseStrict": false
+    "noImplicitUseStrict": false,
+    "sourceMap": true
   },
   "include": [
     "src"
