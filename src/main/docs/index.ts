@@ -38,7 +38,7 @@ export default {
     '/login': loginPath,
     '/signup': signupPath,
     '/surveys': surveyPath,
-    'surveys/{surveyId}/results': surveyResultPath
+    '/surveys/{surveyId}/results': surveyResultPath
   },
   schemas: {
     account: accountSchema,
