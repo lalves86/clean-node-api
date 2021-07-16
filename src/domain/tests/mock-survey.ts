@@ -1,53 +1,33 @@
+import faker from 'faker'
 import { AddSurveyParams } from '@/data/usecases/survey/add-survey/db-add-survey-protocols'
-import { LoadSurveyById, SurveyModel } from '@/data/usecases/survey/load-survey-by-id/db-load-survey-by-id-protocols'
+import { SurveyModel } from '@/data/usecases/survey/load-survey-by-id/db-load-survey-by-id-protocols'
 
 export const mockSurveyModel = (): SurveyModel => {
   return {
-    id: 'any_id',
-    question: 'any_question',
+    id: faker.datatype.uuid(),
+    question: faker.random.words(),
     answers: [{
-      answer: 'any_answer'
+      answer: faker.random.word()
     }, {
-      answer: 'other_answer'
+      answer: faker.random.word(),
+      image: faker.image.imageUrl()
     }],
-    date: new Date()
+    date: faker.date.recent()
   }
 }
 
-export const mockSurveyModels = (): SurveyModel[] => {
-  return [{
-    id: 'any_id',
-    question: 'any_question',
-    answers: [{
-      image: 'any_image',
-      answer: 'any_answer'
-    }],
-    date: new Date()
-  }, {
-    id: 'other_id',
-    question: 'other_question',
-    answers: [{
-      image: 'other_image',
-      answer: 'other_answer'
-    }],
-    date: new Date()
-  }]
-}
+export const mockSurveyModels = (): SurveyModel[] => [
+  mockSurveyModel(),
+  mockSurveyModel()
+]
 
 export const mockAddSurveyParams = (): AddSurveyParams => ({
-  question: 'any_question',
+  question: faker.random.words(),
   answers: [{
-    image: 'any_image',
-    answer: 'any_answer'
+    image: faker.image.imageUrl(),
+    answer: faker.random.word()
+  }, {
+    answer: faker.random.word()
   }],
-  date: new Date()
+  date: faker.date.recent()
 })
-
-export const mockLoadSurveyById = (): LoadSurveyById => {
-  class LoadSurveyByIdStub implements LoadSurveyById {
-    async loadById (id: string): Promise<SurveyModel> {
-      return await Promise.resolve(mockSurveyModel())
-    }
-  }
-  return new LoadSurveyByIdStub()
-}
