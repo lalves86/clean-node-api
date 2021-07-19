@@ -8,6 +8,7 @@ import { LoadSurveyByIdSpy, LoadSurveyResultSpy } from '@/presentation/tests'
 import { throwError } from '@/domain/tests'
 
 const mockRequest = (): HttpRequest => ({
+  accountId: faker.datatype.uuid(),
   params: {
     surveyId: faker.datatype.uuid()
   }
@@ -60,11 +61,12 @@ describe('LoadSurveyResult Controller', () => {
     expect(httpRequest).toEqual(serverError(new Error()))
   })
 
-  test('should call LoadSurveyResult with correct value', async () => {
+  test('should call LoadSurveyResult with correct values', async () => {
     const { sut, loadSurveyResultSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
     expect(loadSurveyResultSpy.surveyId).toBe(httpRequest.params.surveyId)
+    expect(loadSurveyResultSpy.accountId).toBe(httpRequest.accountId)
   })
 
   test('should return 500 if LoadSurveyResult throws', async () => {
