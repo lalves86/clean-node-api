@@ -4,9 +4,8 @@ import { LoadSurveysController } from './load-surveys-controller'
 import { noContent, ok, serverError } from '../../../helper/http/http-helper'
 import { throwError } from '@/domain/tests'
 import { LoadSurveysSpy } from '@/presentation/tests'
-import { HttpRequest } from '@/presentation/protocols'
 
-const mockRequest = (): HttpRequest => ({
+const mockRequest = (): LoadSurveysController.Request => ({
   accountId: faker.datatype.uuid()
 })
 

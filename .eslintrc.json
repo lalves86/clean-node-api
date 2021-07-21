@@ -6,6 +6,8 @@
   "rules": {
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
-    "node/no-path-concat": "off"
+    "node/no-path-concat": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "import/export": "off"
   }
 }
