@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { AddSurveyParams } from '@/data/usecases/survey/add-survey/db-add-survey-protocols'
+import { AddSurvey } from '@/data/usecases/survey/add-survey/db-add-survey-protocols'
 import { SurveyModel } from '@/data/usecases/survey/load-survey-by-id/db-load-survey-by-id-protocols'
 
 export const mockSurveyModel = (): SurveyModel => {
@@ -21,7 +21,7 @@ export const mockSurveyModels = (): SurveyModel[] => [
   mockSurveyModel()
 ]
 
-export const mockAddSurveyParams = (): AddSurveyParams => ({
+export const mockAddSurveyParams = (): AddSurvey.Params => ({
   question: faker.random.words(),
   answers: [{
     image: faker.image.imageUrl(),
