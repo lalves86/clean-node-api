@@ -1,5 +1,6 @@
+import faker from 'faker'
 import { DbAddAccount } from './db-add-account'
-import { mockAccountModel, mockAddAccountParams, throwError } from '@/domain/tests'
+import { mockAddAccountParams, throwError } from '@/domain/tests'
 import { HasherSpy, AddAccountRepositorySpy, LoadAccountByEmailRepositorySpy } from '@/data/tests'
 
 type SutTypes = {
@@ -13,7 +14,7 @@ const makeSut = (): SutTypes => {
   const hasherSpy = new HasherSpy()
   const addAccountRepositorySpy = new AddAccountRepositorySpy()
   const loadAccountByEmailRepositorySpy = new LoadAccountByEmailRepositorySpy()
-  loadAccountByEmailRepositorySpy.accountModel = null
+  loadAccountByEmailRepositorySpy.result = null
   const sut = new DbAddAccount(hasherSpy, addAccountRepositorySpy, loadAccountByEmailRepositorySpy)
   return {
     sut,
@@ -58,17 +59,28 @@ describe('DbAddAccount Usecase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test('should return true if LoadAccountByEmailRepository returns true', async () => {
+  test('should return false if AddAccountRepository returns false', async () => {
+    const { sut, addAccountRepositorySpy } = makeSut()
+    addAccountRepositorySpy.result = false
+    const isValid = await sut.add(mockAddAccountParams())
+    expect(isValid).toBe(false)
+  })
+
+  test('should return true on success', async () => {
     const { sut } = makeSut()
     const isValid = await sut.add(mockAddAccountParams())
-    expect(isValid).toBeTruthy()
+    expect(isValid).toBe(true)
   })
 
   test('should return false if LoadAccountByEmailRepository returns an account', async () => {
     const { sut, loadAccountByEmailRepositorySpy } = makeSut()
-    loadAccountByEmailRepositorySpy.accountModel = mockAccountModel()
+    loadAccountByEmailRepositorySpy.result = {
+      id: faker.datatype.uuid(),
+      name: faker.name.findName(),
+      password: faker.internet.password()
+    }
     const isValid = await sut.add(mockAddAccountParams())
-    expect(isValid).toBeFalsy()
+    expect(isValid).toBe(false)
   })
 
   test('should call LoadAccountByEmailRepository with correct values', async () => {
