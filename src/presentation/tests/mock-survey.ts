@@ -1,7 +1,8 @@
+import faker from 'faker'
 import { SurveyModel } from '@/domain/models/survey'
-import { mockSurveyModel, mockSurveyModels } from '@/domain/tests'
+import { mockSurveyModels } from '@/domain/tests'
 import { AddSurvey } from '@/domain/usecases/survey/add-survey'
-import { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
+import { LoadAnswersBySurvey } from '@/domain/usecases/survey/load-answers-by-survey'
 import { CheckSurveyById } from '@/domain/usecases/survey/check-survey-by-id'
 import { LoadSurveys } from '@/domain/usecases/survey/load-surveys'
 
@@ -24,13 +25,17 @@ export class LoadSurveysSpy implements LoadSurveys {
   }
 }
 
-export class LoadSurveyByIdSpy implements LoadSurveyById {
-  surveyModel = mockSurveyModel()
+export class LoadAnswersBySurveySpy implements LoadAnswersBySurvey {
+  result = [
+    faker.random.word(),
+    faker.random.word()
+  ]
+
   id: string
 
-  async loadById (id: string): Promise<SurveyModel> {
+  async loadAnswers (id: string): Promise<LoadAnswersBySurvey.Result> {
     this.id = id
-    return await Promise.resolve(this.surveyModel)
+    return await Promise.resolve(this.result)
   }
 }
 
