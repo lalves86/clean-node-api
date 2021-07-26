@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { AddSurvey } from '@/data/usecases/survey/add-survey/db-add-survey-protocols'
-import { SurveyModel } from '@/data/usecases/survey/load-survey-by-id/db-load-answers-by-survey-protocols'
+import { SurveyModel } from '@/data/usecases/survey/load-answers-by-survey/db-load-answers-by-survey-protocols'
 
 export const mockSurveyModel = (): SurveyModel => {
   return {
