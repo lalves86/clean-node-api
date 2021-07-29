@@ -1,11 +1,12 @@
+import typeDefs from '@/main/graphql/type-defs'
+import resolvers from '@/main/graphql/resolvers'
+import schemaDirectives from '@/main/graphql/directives'
+
 import { ApolloServer } from 'apollo-server-express'
 import { Express } from 'express'
-
-import typeDefs from '../graphql/type-defs'
-import resolvers from '../graphql/resolvers'
 import { GraphQLError } from 'graphql'
 
-const handleErrors = async (response: any, errors: readonly GraphQLError[]): Promise<void> => {
+const handleErrors = (response: any, errors: readonly GraphQLError[]): void => {
   errors?.forEach(error => {
     response.data = undefined
     if (checkError(error, 'UserInputError')) {
@@ -20,22 +21,21 @@ const handleErrors = async (response: any, errors: readonly GraphQLError[]): Pro
   })
 }
 
-const checkError = (error: GraphQLError, erroName: string): boolean => {
-  return [error.name, error.originalError.name].some(name => name === erroName)
+const checkError = (error: GraphQLError, errorName: string): boolean => {
+  return [error.name, error.originalError?.name].some(name => name === errorName)
 }
 
-export default async (app: Express): Promise<void> => {
+export default (app: Express): void => {
   const server = new ApolloServer({
     resolvers,
     typeDefs,
+    schemaDirectives,
+    context: ({ req }) => ({ req }),
     plugins: [{
-      requestDidStart: async () => ({
-        willSendResponse: async ({ response, errors }) => await handleErrors(response, errors)
+      requestDidStart: () => ({
+        willSendResponse: ({ response, errors }) => handleErrors(response, errors)
       })
     }]
   })
-
-  await server.start()
-
   server.applyMiddleware({ app })
 }
