@@ -6,5 +6,6 @@ import schemaDirectives from '../directives'
 export const makeApolloServer = (): ApolloServer => new ApolloServer({
   typeDefs,
   resolvers,
-  schemaDirectives
+  schemaDirectives,
+  context: ({ req }) => ({ req })
 })
